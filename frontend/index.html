@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Roommate Finder</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <nav class="navbar">
+
+        <h1>Roommate Finder</h1>
+
+        <button class="login-btn">
+            Login
+        </button>
+
+    </nav>
+
+    <section class="hero">
+
+        <h2>หาห้อง หารูมเมท ได้ง่ายขึ้น</h2>
+
+        <p> สำหรับนักศึกษาและคนทำงาน</p>
+
+
+        <div class="form-container"> 
+            
+            <input
+                type="text"
+                id="title"
+                placeholder="ชื่อหอพัก"
+            >
+
+            <input
+                type="text"
+                id="price"
+                placeholder="งบประมาณ"
+
+            >
+            <select id="location">
+                <option value="เลือกเพศ">เลือกLocation</option>
+                <option value="มจพ.">มจพ.</option>
+                <option value="มจธ.">มจธ.</option>
+                <option value="สจล.">สจล.</option>
+                <option value="เกษตรศาสตร์.">เกษตรศาสตร์.</option>
+            </select>
+
+            <input
+                type="text"
+                id="distance"
+                placeholder="ระยะทางจากLocation (ไม่เกินกี่KM.)"
+            >
+
+            <select id="gender">
+                <option value="เลือกเพศ">เลือกเพศ</option>
+                <option value="ชาย">ชาย</option>
+                <option value="หญิง">หญิง</option>
+            </select>
+
+            <input
+                type="text"
+                id="discription"
+                placeholder="รายละเอียด"
+            >
+            
+            <input
+                type="text"
+                id="contract"
+                placeholder="Phone / Line"
+            >
+        </div>
+
+
+        <button onclick="addPost()">
+            +สร้างโพสต์
+        </button>
+
+    </section>
+
+    <section class="posts" id="posts">
+
+
+    </section>
+
+    <script src="script.js"></script>
+
+</body>
+</html>
