@@ -72,14 +72,31 @@ function createPostCard(post){
     card.appendChild(discription);
     card.appendChild(contract);
 
+    //---------------Delete Button---------------
     const deleteBtn = document.createElement("button");
     deleteBtn.textContent = "ลบ";
 
     deleteBtn.onclick = function(){
         card.remove();
     }
-
     card.appendChild(deleteBtn);
+
+    //---------------Edit Button--------------//
+    const editBtn = document.createElement("button");
+    editBtn.textContent = "แก้ไข";
+
+    editBtn.onclick = function(){
+        document.getElementById("title").value = post.title;
+        document.getElementById("price").value = post.price;
+        document.getElementById("location").value = post.location;
+        document.getElementById("gender").value = post.gender;
+        document.getElementById("discription").value = post.discription;
+        document.getElementById("contract").value = post.contract;
+        
+        card.remove();
+    }
+
+    card.appendChild(editBtn);
 
     document.getElementById("posts").appendChild(card);
 
