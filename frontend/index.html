@@ -12,72 +12,115 @@
 
     <nav class="navbar">
 
-        <h1>Roommate Finder</h1>
+        <img src="logo_roommate.png" alt="logo" class="logo">
 
-        <button class="login-btn">
-            Login
-        </button>
+        <div class="nav-right">
+            <input
+                type="text"
+                id="searchInput"
+                class="searchBox"
+                placeholder="ค้นหา..."
+            >
+            <select id="searchLocation">
+                    <option value="">เลือกLocation</option>
+                    <option value="มจพ.">มจพ.</option>
+                    <option value="มจธ.">มจธ.</option>
+                    <option value="สจล.">สจล.</option>
+                    <option value="เกษตรศาสตร์.">เกษตรศาสตร์.</option>
+            </select>
+
+            <select id="searchGender">
+                    <option value="">เลือกเพศ</option>
+                    <option value="ชาย">ชาย</option>
+                    <option value="หญิง">หญิง</option>
+            </select>
+            <button onclick="searchPost()">ค้นหา</button>
+
+
+            <button class="createPost-btn">
+                สร้างโพสต์
+            </button>
+
+            <button class="login-btn">
+                Login
+            </button>
+        </div>
+
 
     </nav>
 
     <section class="hero">
 
-        <h2>หาห้อง หารูมเมท ได้ง่ายขึ้น</h2>
 
-        <p> สำหรับนักศึกษาและคนทำงาน</p>
+        <div id="modal" class="modal">
+            <div class = "modal-content">
+
+                <button id="closeModalBtn" class="closeModalBtn">
+                    X
+                </button>
+                <p>กรุณากรอกข้อมูลหอพัก..</p>
 
 
-        <div class="form-container"> 
-            
-            <input
-                type="text"
-                id="title"
-                placeholder="ชื่อหอพัก"
-            >
+                <div class="form-container"> 
+                    
+                    <input
+                        type="text"
+                        id="title"
+                        placeholder="ชื่อหอพัก"
+                    >
 
-            <input
-                type="text"
-                id="price"
-                placeholder="งบประมาณ"
+                    <input
+                        type="text"
+                        id="price"
+                        placeholder="งบประมาณ"
 
-            >
-            <select id="location">
-                <option value="เลือกLocation">เลือกLocation</option>
-                <option value="มจพ.">มจพ.</option>
-                <option value="มจธ.">มจธ.</option>
-                <option value="สจล.">สจล.</option>
-                <option value="เกษตรศาสตร์.">เกษตรศาสตร์.</option>
-            </select>
+                    >
+                    <select id="location">
+                        <option value="เลือกLocation">เลือกLocation</option>
+                        <option value="มจพ.">มจพ.</option>
+                        <option value="มจธ.">มจธ.</option>
+                        <option value="สจล.">สจล.</option>
+                        <option value="เกษตรศาสตร์.">เกษตรศาสตร์.</option>
+                    </select>
 
-            <input
-                type="text"
-                id="distance"
-                placeholder="ระยะทางจากLocation (ไม่เกินกี่KM.)"
-            >
+                    <input
+                        type="text"
+                        id="distance"
+                        placeholder="ระยะทางจากLocation (ไม่เกินกี่KM.)"
+                    >
 
-            <select id="gender">
-                <option value="เลือกเพศ">เลือกเพศ</option>
-                <option value="ชาย">ชาย</option>
-                <option value="หญิง">หญิง</option>
-            </select>
+                    <select id="gender">
+                        <option value="เลือกเพศ">เลือกเพศ</option>
+                        <option value="ชาย">ชาย</option>
+                        <option value="หญิง">หญิง</option>
+                    </select>
 
-            <input
-                type="text"
-                id="discription"
-                placeholder="รายละเอียด"
-            >
-            
-            <input
-                type="text"
-                id="contract"
-                placeholder="Phone / Line"
-            >
+                    <input
+                        type="text"
+                        id="discription"
+                        placeholder="รายละเอียด"
+                    >
+                    
+                    <input
+                        type="text"
+                        id="contract"
+                        placeholder="Phone / Line"
+                    >
+
+                    <input
+                        type="file"
+                        id="imageInput"
+                    >
+                </div>    
+                <button onclick="addPost()">
+                    +สร้างโพสต์
+                </button>            
+
+            </div>
+
         </div>
 
 
-        <button onclick="addPost()">
-            +สร้างโพสต์
-        </button>
 
     </section>
 
