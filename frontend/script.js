@@ -1,5 +1,7 @@
 let posts = [];
 
+let currentUser = null;
+
 let editingPostId = null;
 
 function addPost(){
@@ -16,6 +18,11 @@ function addPost(){
             alert("กรอกข้อมูลให้ครบถ้วน");
             return;
     }
+
+    if(currentUser === null){
+        alert("กรุณา Login ก่อน");
+        return;
+    }
     
     const imageInput = document.getElementById("imageInput");
     const file = imageInput.files[0];
@@ -25,6 +32,7 @@ function addPost(){
     reader.onload = function(){
         const post = {
             id: Date.now(),
+            user: currentUser,
             title: title,
             price: price,
             location: location,
@@ -37,9 +45,31 @@ function addPost(){
 
 
         if(editingPostId !== null){
-            posts = posts.ilter(function(item){
-                return !(item.id === editingPostId)
-            });
+            
+            const index = posts.findIndex(p => p.id === editingPostId);
+
+            if(index === -1)
+                return;
+
+            posts[index] = {
+                id: editingPostId,
+                user: posts[index].user,
+                title,
+                price,
+                location,
+                distance,
+                gender,
+                discription,
+                contract,
+                image: reader.result                
+            };
+
+            editingPostId = null;
+
+            localStorage.setItem("posts",JSON.stringify(posts));
+
+            renderPost();
+            return;
         }
 
         posts.push(post);
@@ -65,6 +95,9 @@ function addPost(){
     document.getElementById("gender").value = "เลือกเพศ";
     document.getElementById("discription").value = "";
     document.getElementById("contract").value = "";
+
+
+    modal.style.display = "none";    
 }
 
 function createPostCard(post){
@@ -127,7 +160,10 @@ function createPostCard(post){
         card.remove();
 
     }
-    card.appendChild(deleteBtn);
+    
+    if(post.user === currentUser){
+        card.appendChild(deleteBtn);        
+    }
 
     //---------------Edit Button--------------//
     const editBtn = document.createElement("button");
@@ -148,7 +184,9 @@ function createPostCard(post){
         modal.style.display = "block";
     }
 
-    card.appendChild(editBtn);
+    if(post.user === currentUser){
+        card.appendChild(editBtn);        
+    }
 
     document.getElementById("posts").appendChild(card);
 
@@ -159,13 +197,6 @@ function searchPost(){
     const keywordTitle = document.getElementById("searchInput").value.toLowerCase();
     const keywordLocation = document.getElementById("searchLocation").value.toLowerCase();
     const keywordGender = document.getElementById("searchGender").value.toLowerCase();
-
-    if(keywordLocation === "เลือกLocation"){
-        keywordLocation = "";
-    }
-    if(keywordGender === "เลือกเพศ"){
-        keywordGender = "";
-    }
 
 
     document.getElementById("posts").innerHTML = "";
@@ -220,4 +251,54 @@ openBtn.onclick = function(){
 
 closeBtn.onclick = function(){
     modal.style.display = "none";
+}
+
+function login(){
+    const username = document.getElementById("usernameInput").value;
+
+    if(username === ""){
+        alert("ใส่ชื่อก่อน");
+        return;
+    }
+
+    currentUser = username;
+    console.log(currentUser);
+
+    document.getElementById("loginPage").style.display = "none";
+
+    alert("สวัสดี " + currentUser);
+
+    localStorage.setItem("currentUser",currentUser);
+
+    renderPost();
+}
+
+function Logout(){
+    currentUser = null;
+    
+    alert("ออกจากระบบแล้ว");
+
+    document.getElementById("loginPage").style.display = "flex";
+
+    localStorage.removeItem("currentUser");
+
+    renderPost();
+}
+
+function renderPost(){
+    document.getElementById("posts").innerHTML = "";
+
+    posts.forEach(post => {
+        createPostCard(post);
+    });
+}
+
+
+const saveUser = localStorage.getItem("currentUser");
+if(saveUser !== null){
+    currentUser = saveUser;
+
+    document.getElementById("loginPage").style.display = "none";
+
+    renderPost();
 }
