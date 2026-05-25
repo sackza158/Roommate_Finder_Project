@@ -179,3 +179,20 @@ body{
     
     gap: 10px;
 }
+
+.empty-container{
+    width: 100%;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    height: 60vh;
+
+}
+.empty-font{
+    font-size: 40px;
+    color: rgba(87, 87, 87, 0.637);
+}

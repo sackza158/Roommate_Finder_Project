@@ -40,10 +40,10 @@ function addPost(){
             gender: gender,
             discription: discription,
             contract: contract,
-            image: reader.result
+            image: file ? reader.result : ""
         };
 
-
+        //เช็คว่าการกด addPost ครั้งนี้ มาจากการแก้ไขหรือไม่ ถ้าใช่ จะทำ
         if(editingPostId !== null){
             
             const index = posts.findIndex(p => p.id === editingPostId);
@@ -61,7 +61,7 @@ function addPost(){
                 gender,
                 discription,
                 contract,
-                image: reader.result                
+                image: file ? reader.result : posts[index].image                
             };
 
             editingPostId = null;
@@ -69,6 +69,7 @@ function addPost(){
             localStorage.setItem("posts",JSON.stringify(posts));
 
             renderPost();
+            modal.style.display = "none"; 
             return;
         }
 
@@ -80,12 +81,18 @@ function addPost(){
         
         editingPostId = null;
 
+        
+        modal.style.display = "none";  
+
     }
 
-    reader.readAsDataURL(file);
 
-
-
+    if(file){
+        reader.readAsDataURL(file);
+    }
+    else{
+        reader.onload();
+    }
 
 
     document.getElementById("title").value = "";
@@ -95,9 +102,7 @@ function addPost(){
     document.getElementById("gender").value = "เลือกเพศ";
     document.getElementById("discription").value = "";
     document.getElementById("contract").value = "";
-
-
-    modal.style.display = "none";    
+  
 }
 
 function createPostCard(post){
@@ -199,10 +204,13 @@ function searchPost(){
     const keywordGender = document.getElementById("searchGender").value.toLowerCase();
 
 
-    document.getElementById("posts").innerHTML = "";
+    const postContainer = document.getElementById("posts");
 
-    posts.forEach(function(post){
-        if(
+    postContainer.innerHTML = "";
+
+    //อันไหน ตรงเงื่อนไข เก็บเข้า Array filterposts;
+    const filterposts = posts.filter(function(post){
+        return(
             post.title
             .toLowerCase()
             .includes(keywordTitle)
@@ -219,25 +227,27 @@ function searchPost(){
             .toLowerCase()
             .includes(keywordGender)
         
-        )
-        {
+        );
+
+    });
+
+    if(filterposts.length === 0){
+         postContainer.innerHTML = `
+                                    <div class="empty-container">
+                                        <h2 class="empty-font">
+                                            ไม่มีโพสต์ที่คุณค้นหา
+                                        </h2>
+                                    </div> ` ;    
+        return;
+    }
+    else{
+        filterposts.forEach(function(post){
             createPostCard(post);
-        }
-
-    });
-
+        });
+    }
 
 }
 
-
-const savePosts = localStorage.getItem("posts");
-if(savePosts !== null){
-    posts = JSON.parse(savePosts);
-
-    posts.forEach(function(post){
-        createPostCard(post);
-    });
-}
 
 const modal = document.getElementById("modal");
 
@@ -286,9 +296,32 @@ function Logout(){
 }
 
 function renderPost(){
-    document.getElementById("posts").innerHTML = "";
+    const postsContainer = document.getElementById("posts");
 
-    posts.forEach(post => {
+    postsContainer.innerHTML = "";
+
+    if(posts.length === 0){
+        postsContainer.innerHTML = `
+                                    <div class="empty-container">
+                                        <h2 class="empty-font">
+                                            ยังไม่มีโพสต์
+                                        </h2>
+                                    </div> `
+    }
+    else{
+        posts.forEach(post => {
+            createPostCard(post);
+        });
+    }
+
+
+}
+
+const savePosts = localStorage.getItem("posts");
+if(savePosts !== null){
+    posts = JSON.parse(savePosts);
+
+    posts.forEach(function(post){
         createPostCard(post);
     });
 }
@@ -301,4 +334,10 @@ if(saveUser !== null){
     document.getElementById("loginPage").style.display = "none";
 
     renderPost();
+}
+
+window.onclick = function(event){
+    if(event.target === modal){
+        modal.style.display = "none";
+    }
 }
