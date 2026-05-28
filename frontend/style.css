@@ -2,6 +2,7 @@ body{
     margin: 0;
     font-family: Arial;
     background-color: #f4f6f9;
+    padding: 10px;
 }
 
 .logo{
@@ -63,6 +64,8 @@ body{
     border-radius: 12px;
 
     box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+
+    box-sizing: border-box;
 }
 
 .card:hover {
@@ -70,7 +73,7 @@ body{
     box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15);
     cursor: pointer;
 
-    transition: transfrom 0.3 ease, box-shadow 0.3s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
 }
 
@@ -107,7 +110,7 @@ body{
     box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15);
     cursor: pointer;
 
-    transition: transfrom 0.3 ease, box-shadow 0.3s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);    
 }
 
@@ -125,6 +128,9 @@ body{
     background-color: rgba(0,0,0,0.5);
 
     z-index: 1000;
+
+
+
 }
 
 .modal-content{
@@ -196,3 +202,34 @@ body{
     font-size: 40px;
     color: rgba(87, 87, 87, 0.637);
 }
+
+@media (max-width: 768px){
+    .navbar{
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .nav-right{
+        flex-direction: column;
+        width: 100%;
+        gap: 8px;
+    }
+
+    .nav-right button,
+    .nav-right input,
+    .nav-right select{
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .card{
+        width: 100%;
+    }
+
+    .modal-content{
+        width: 90%;
+        box-sizing: border-box;
+    }
+}
+

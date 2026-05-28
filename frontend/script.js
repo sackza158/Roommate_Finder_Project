@@ -29,6 +29,7 @@ function addPost(){
 
     const reader = new FileReader();
 
+    //จะทำฟังชั่นนี้ หลังอ่านรูปเสร็จ
     reader.onload = function(){
         const post = {
             id: Date.now(),
@@ -77,7 +78,7 @@ function addPost(){
 
         localStorage.setItem("posts",JSON.stringify(posts));
 
-        createPostCard(post);  
+        renderPost();  
         
         editingPostId = null;
 
@@ -86,7 +87,7 @@ function addPost(){
 
     }
 
-
+    //เช็คว่ามีรูปไหม
     if(file){
         reader.readAsDataURL(file);
     }
@@ -102,6 +103,7 @@ function addPost(){
     document.getElementById("gender").value = "เลือกเพศ";
     document.getElementById("discription").value = "";
     document.getElementById("contract").value = "";
+
   
 }
 
@@ -134,7 +136,6 @@ function createPostCard(post){
     const image = document.createElement("img");
 
     image.src = post.image;
-    image.width = 200;
 
     image.classList.add("post-image");
 
@@ -318,14 +319,10 @@ function renderPost(){
 }
 
 const savePosts = localStorage.getItem("posts");
-if(savePosts !== null){
+if(savePosts !== null){  
     posts = JSON.parse(savePosts);
-
-    posts.forEach(function(post){
-        createPostCard(post);
-    });
 }
-
+renderPost();
 
 const saveUser = localStorage.getItem("currentUser");
 if(saveUser !== null){
