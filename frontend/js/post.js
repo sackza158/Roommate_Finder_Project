@@ -1,9 +1,3 @@
-let posts = [];
-
-let currentUser = null;
-
-let editingPostId = null;
-
 function addPost(){
     const title = document.getElementById("title").value;
     const price = document.getElementById("price").value;
@@ -103,9 +97,10 @@ function addPost(){
     document.getElementById("gender").value = "เลือกเพศ";
     document.getElementById("discription").value = "";
     document.getElementById("contract").value = "";
-
+    document.getElementById("previewImage").src = "";
   
 }
+
 
 function createPostCard(post){
     const card = document.createElement("div");
@@ -199,102 +194,6 @@ function createPostCard(post){
 }
 
 
-function searchPost(){
-    const keywordTitle = document.getElementById("searchInput").value.toLowerCase();
-    const keywordLocation = document.getElementById("searchLocation").value.toLowerCase();
-    const keywordGender = document.getElementById("searchGender").value.toLowerCase();
-
-
-    const postContainer = document.getElementById("posts");
-
-    postContainer.innerHTML = "";
-
-    //อันไหน ตรงเงื่อนไข เก็บเข้า Array filterposts;
-    const filterposts = posts.filter(function(post){
-        return(
-            post.title
-            .toLowerCase()
-            .includes(keywordTitle)
-        
-            &&
-
-            post.location
-            .toLowerCase()
-            .includes(keywordLocation)
-
-            &&
-
-            post.gender
-            .toLowerCase()
-            .includes(keywordGender)
-        
-        );
-
-    });
-
-    if(filterposts.length === 0){
-         postContainer.innerHTML = `
-                                    <div class="empty-container">
-                                        <h2 class="empty-font">
-                                            ไม่มีโพสต์ที่คุณค้นหา
-                                        </h2>
-                                    </div> ` ;    
-        return;
-    }
-    else{
-        filterposts.forEach(function(post){
-            createPostCard(post);
-        });
-    }
-
-}
-
-
-const modal = document.getElementById("modal");
-
-const openBtn = document.querySelector(".createPost-btn");
-
-const closeBtn = document.getElementById("closeModalBtn");
-
-openBtn.onclick = function(){
-    modal.style.display = "block";
-}
-
-closeBtn.onclick = function(){
-    modal.style.display = "none";
-}
-
-function login(){
-    const username = document.getElementById("usernameInput").value;
-
-    if(username === ""){
-        alert("ใส่ชื่อก่อน");
-        return;
-    }
-
-    currentUser = username;
-    console.log(currentUser);
-
-    document.getElementById("loginPage").style.display = "none";
-
-    alert("สวัสดี " + currentUser);
-
-    localStorage.setItem("currentUser",currentUser);
-
-    renderPost();
-}
-
-function Logout(){
-    currentUser = null;
-    
-    alert("ออกจากระบบแล้ว");
-
-    document.getElementById("loginPage").style.display = "flex";
-
-    localStorage.removeItem("currentUser");
-
-    renderPost();
-}
 
 function renderPost(){
     const postsContainer = document.getElementById("posts");
@@ -316,25 +215,4 @@ function renderPost(){
     }
 
 
-}
-
-const savePosts = localStorage.getItem("posts");
-if(savePosts !== null){  
-    posts = JSON.parse(savePosts);
-}
-renderPost();
-
-const saveUser = localStorage.getItem("currentUser");
-if(saveUser !== null){
-    currentUser = saveUser;
-
-    document.getElementById("loginPage").style.display = "none";
-
-    renderPost();
-}
-
-window.onclick = function(event){
-    if(event.target === modal){
-        modal.style.display = "none";
-    }
 }
